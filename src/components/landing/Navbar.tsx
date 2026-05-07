@@ -28,11 +28,11 @@ export function Navbar() {
         initial={{ y: -64, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "glass-strong shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
-            : "bg-transparent"
-        }`}
+        style={{ zIndex: 100 }}
+        className={`fixed inset-x-0 top-0 transition-all duration-500 ${scrolled
+          ? "bg-white/90 backdrop-blur-lg border-b border-hairline shadow-sm"
+          : "bg-transparent"
+          }`}
       >
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6 md:px-12">
           {/* Logo */}
@@ -102,7 +102,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.25 }}
-            className="glass-strong fixed inset-x-4 top-20 z-40 rounded-2xl p-6 shadow-xl md:hidden"
+            className="glass-strong fixed inset-x-4 top-20 z-[99] rounded-2xl p-6 shadow-xl md:hidden"
           >
             <div className="flex flex-col gap-5">
               {navLinks.map((link) => (

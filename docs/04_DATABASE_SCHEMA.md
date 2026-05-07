@@ -72,6 +72,8 @@ CREATE TABLE owner_details (
   razorpay_customer_id      TEXT,
   razorpay_subscription_id  TEXT,
   notification_email        TEXT,
+  google_access_token       TEXT,
+  google_refresh_token      TEXT,
   created_at                TIMESTAMPTZ DEFAULT NOW(),
   updated_at                TIMESTAMPTZ DEFAULT NOW()
 );

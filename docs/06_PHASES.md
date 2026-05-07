@@ -8,34 +8,34 @@
 ### Sprint 1: Project Setup + Landing Page + Login
 **Estimated time:** 2-3 days
 
-- [ ] Initialize Next.js 15 project with TypeScript
-- [ ] Install all dependencies:
+- [x] Initialize Next.js 15 project with TypeScript
+- [x] Install all dependencies:
   ```
   @supabase/supabase-js @supabase/ssr framer-motion lucide-react
   qrcode.react @google/generative-ai razorpay resend
   canvas-confetti @types/canvas-confetti
   ```
-- [ ] Configure Tailwind CSS with custom design tokens
-- [ ] Set up Google Fonts (Inter + Bricolage Grotesque)
-- [ ] Create global CSS with glassmorphism utilities
-- [ ] Build Landing Page sections:
-  - [ ] Navbar (floating, glassmorphic)
-  - [ ] Hero section (animated, strong CTA)
-  - [ ] How It Works (3-step animated flow)
-  - [ ] Features bento grid (6 cards)
-  - [ ] Review Shield dedicated section
-  - [ ] Pricing section (Monthly / Annual toggle, ₹ pricing)
-  - [ ] Testimonials (3 cards)
-  - [ ] CTA banner
-  - [ ] Footer
-- [ ] Build static pages (Required for Google API approval):
-  - [ ] `/privacy` (Privacy Policy)
-  - [ ] `/terms` (Terms & Conditions)
-  - [ ] `/contact` (Contact Us)
-- [ ] Build Login page (`/login`)
-  - [ ] Glassmorphic card layout
-  - [ ] "Sign in with Google" button
-  - [ ] Animated background orbs
+- [x] Configure Tailwind CSS with custom design tokens
+- [x] Set up Google Fonts (Inter + Bricolage Grotesque)
+- [x] Create global CSS with glassmorphism utilities
+- [x] Build Landing Page sections:
+  - [x] Navbar (floating, glassmorphic)
+  - [x] Hero section (animated, strong CTA)
+  - [x] How It Works (3-step animated flow)
+  - [x] Features bento grid (6 cards)
+  - [x] Review Shield dedicated section
+  - [x] Pricing section (Monthly / Annual toggle, ₹ pricing)
+  - [x] Testimonials (3 cards)
+  - [x] CTA banner
+  - [x] Footer
+- [x] Build static pages (Required for Google API approval):
+  - [x] `/privacy` (Privacy Policy)
+  - [x] `/terms` (Terms & Conditions)
+  - [x] `/contact` (Contact Us)
+- [x] Build Login page (`/login`)
+  - [x] Glassmorphic card layout
+  - [x] "Sign in with Google" button
+  - [x] Animated background orbs
 - [ ] SEO: meta tags, OG image, title tags
 
 ---
@@ -43,17 +43,17 @@
 ### Sprint 2: Supabase Schema + Auth + Middleware
 **Estimated time:** 1-2 days
 
-- [ ] Apply full database migration (see `04_DATABASE_SCHEMA.md`)
-- [ ] Set up Supabase client (browser + server)
-- [ ] Configure Google OAuth in Supabase with `business.manage` + `offline_access`
-- [ ] Build `/auth/callback` route handler
-- [ ] Build `POST /api/auth/sync-profile` route
-- [ ] Write `middleware.ts` with role-based route protection
-- [ ] Build dashboard layout shell (`(dashboard)/layout.tsx`):
-  - [ ] Glassmorphic sidebar with nav items
-  - [ ] User avatar + name
-  - [ ] Active route highlighting
-  - [ ] Mobile responsive (collapsible sidebar)
+- [x] Apply full database migration (see `04_DATABASE_SCHEMA.md`)
+- [x] Set up Supabase client (browser + server)
+- [x] Configure Google OAuth in Supabase with `business.manage` + `offline_access`
+- [x] Build `/auth/callback` route handler
+- [x] Build `POST /api/auth/sync-profile` route
+- [x] Write `middleware.ts` with role-based route protection
+- [x] Build dashboard layout shell (`(dashboard)/layout.tsx`):
+  - [x] Glassmorphic sidebar with nav items
+  - [x] User avatar + name
+  - [x] Active route highlighting
+  - [x] Mobile responsive (collapsible sidebar)
 - [ ] Trial expiry check in dashboard layout
 
 ---
@@ -66,16 +66,16 @@
   - Enable Google My Business Account Management API
   - Create OAuth 2.0 credentials
   - Configure consent screen (Testing mode)
-- [ ] Build `GET /api/google/locations` with OAuth token refresh
-- [ ] Implement mock location data for dev (before API approval)
-- [ ] Build Setup Wizard (`/dashboard/setup`):
-  - [ ] Step 1: Location picker (fetches from GBP API)
-  - [ ] Step 2: Contact + social links form
-  - [ ] Step 3: QR ready screen
-- [ ] Build `POST /api/businesses/create`
-- [ ] Build QR code display with `qrcode.react`
-- [ ] Build QR download (PNG + PDF)
-- [ ] Build `PATCH /api/businesses/[id]`
+- [x] Build `GET /api/google/locations` with OAuth token refresh
+- [x] Implement mock location data for dev (before API approval)
+- [x] Build Setup Wizard (`/dashboard/setup`):
+  - [x] Step 1: Location picker (fetches from GBP API)
+  - [x] Step 2: Contact + social links form
+  - [x] Step 3: QR ready screen
+- [x] Build `POST /api/businesses/create`
+- [x] Build QR code display with `qrcode.react`
+- [x] Build QR download (PNG + PDF)
+- [x] Build `PATCH /api/businesses/[id]`
 
 ---
 
