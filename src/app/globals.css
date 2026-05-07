@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #181d26;
+  --color-primary-active: #0d1218;
+  --color-canvas: #ffffff;
+  --color-surface-soft: #f8fafc;
+  --color-surface-strong: #e0e2e6;
+  --color-surface-dark: #181d26;
+  --color-hairline: #dddddd;
+  --color-ink: #181d26;
+  --color-body: #333840;
+  --color-muted: #41454d;
+  --color-border-strong: #9297a0;
+  --color-on-primary: #ffffff;
+  --color-link: #1b61c9;
+  --color-info: #254fad;
+  --color-success: #006400;
+  --color-signature-coral: #aa2d00;
+  --color-signature-forest: #0a2e0e;
+  --color-signature-navy: #181d26;
+  --color-signature-cream: #f5e9d4;
+  --color-signature-peach: #fcab79;
+  --color-signature-mint: #a8d8c4;
+  --color-signature-yellow: #f4d35e;
+  --color-signature-mustard: #d9a441;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter);
+  --spacing-section: 96px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+  --shadow-subtle: 0 22px 70px rgba(24, 29, 38, 0.08);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--color-canvas);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--color-signature-cream);
+    color: var(--color-ink);
+  }
+}
+
+@layer utilities {
+  .morphism-panel {
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.9)) padding-box,
+      linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(221, 221, 221, 0.7)) border-box;
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+  }
+
+  .shadow-subtle {
+    box-shadow: var(--shadow-subtle);
+  }
+}
