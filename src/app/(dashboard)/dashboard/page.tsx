@@ -33,11 +33,11 @@ export default async function DashboardOverview() {
           <h1 className="font-display text-3xl font-medium text-ink mb-2">Overview</h1>
           <p className="text-body text-sm">Here's what's happening across your businesses today.</p>
         </div>
-        <Button className="gap-2" asChild>
-          <Link href="/dashboard/setup">
+        <Link href="/dashboard/setup">
+          <Button className="gap-2">
             <Plus className="h-4 w-4" /> Add Business
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3 mb-10">
@@ -76,12 +76,16 @@ export default async function DashboardOverview() {
             </div>
             
             <div className="mt-auto pt-6 border-t border-hairline flex gap-2">
-              <Button variant="secondary" size="sm" className="flex-1" asChild>
-                <Link href={`/dashboard/businesses/${business.id}`}>Manage</Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href={`/dashboard/businesses/${business.id}/reviews`}>Reviews</Link>
-              </Button>
+              <Link href={`/dashboard/businesses/${business.id}`} className="flex-1">
+                <Button variant="secondary" size="sm" className="w-full">
+                  Manage
+                </Button>
+              </Link>
+              <Link href={`/dashboard/businesses/${business.id}/reviews`}>
+                <Button variant="ghost" size="sm">
+                  Reviews
+                </Button>
+              </Link>
             </div>
           </div>
         ))}
