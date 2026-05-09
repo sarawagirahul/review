@@ -109,7 +109,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
         <div className="flex flex-col items-center">
           <p className="text-sm text-muted mb-4">Review URL</p>
           <code className="px-4 py-2 rounded-lg bg-surface-soft text-ink font-mono text-sm">
-            reviewboost.in/r/{business.qr_slug}
+            justhustle.in/r/{business.qr_slug}
           </code>
           <div className="mt-6 p-6 rounded-lg bg-white border-2 border-gray-200">
             {/* QR code will be rendered here */}

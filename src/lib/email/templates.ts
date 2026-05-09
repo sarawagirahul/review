@@ -24,11 +24,11 @@ export function TrialEndingEmail({
       </div>
       <div class="content">
         <p>Hi ${businessOwnerName},</p>
-        <p>Your ReviewBoost trial expires in <strong>${daysRemaining} days</strong>.</p>
+        <p>Your JustHustle trial expires in <strong>${daysRemaining} days</strong>.</p>
         <p>To continue collecting reviews from your customers, upgrade to a paid plan now. No credit card required to add a payment method.</p>
-        <a href="https://reviewboost.in/dashboard/billing" class="button">Upgrade Now</a>
+        <a href="https://justhustle.in/dashboard/billing" class="button">Upgrade Now</a>
         <p style="margin-top: 30px; color: #666; font-size: 14px;">
-          Questions? Reply to this email or contact us at support@reviewboost.in
+          Questions? Reply to this email or contact us at support@justhustle.in
         </p>
       </div>
     </div>
@@ -61,11 +61,11 @@ export function TrialExpiredEmail({
       </div>
       <div class="content">
         <p>Hi ${businessOwnerName},</p>
-        <p>Your ReviewBoost trial has expired. To continue collecting customer reviews, please upgrade to a paid plan.</p>
+        <p>Your JustHustle trial has expired. To continue collecting customer reviews, please upgrade to a paid plan.</p>
         <p>Your QR codes are still valid, but customers will see a message when trying to submit reviews.</p>
-        <a href="https://reviewboost.in/dashboard/billing" class="button">Upgrade Now</a>
+        <a href="https://justhustle.in/dashboard/billing" class="button">Upgrade Now</a>
         <p style="margin-top: 30px; color: #666; font-size: 14px;">
-          Need help choosing a plan? Contact us at support@reviewboost.in
+          Need help choosing a plan? Contact us at support@justhustle.in
         </p>
       </div>
     </div>
@@ -103,12 +103,12 @@ export function NewFeedbackEmail({
       </div>
       <div class="content">
         <p>Hi ${businessOwnerName},</p>
-        <p>You received new feedback from a customer on ReviewBoost:</p>
+        <p>You received new feedback from a customer on JustHustle:</p>
         <div class="feedback-box">
           <p style="margin: 0; color: #333; line-height: 1.6;">"${feedback}"</p>
         </div>
-        <p>This feedback helps you understand how to improve your business. Check your ReviewBoost dashboard to see all feedback.</p>
-        <a href="https://reviewboost.in/dashboard/feedback" class="button">View All Feedback</a>
+        <p>This feedback helps you understand how to improve your business. Check your JustHustle dashboard to see all feedback.</p>
+        <a href="https://justhustle.in/dashboard/feedback" class="button">View All Feedback</a>
       </div>
     </div>
   </body>
@@ -141,10 +141,10 @@ export function PaymentFailedEmail({
       <div class="content">
         <p>Hi ${businessOwnerName},</p>
         <p>Your recent payment failed. Your subscription may be interrupted if the payment is not completed within 48 hours.</p>
-        <p>Please update your payment method to continue using ReviewBoost without any interruption.</p>
-        <a href="https://reviewboost.in/dashboard/billing" class="button">Update Payment Method</a>
+        <p>Please update your payment method to continue using JustHustle without any interruption.</p>
+        <a href="https://justhustle.in/dashboard/billing" class="button">Update Payment Method</a>
         <p style="margin-top: 30px; color: #666; font-size: 14px;">
-          Questions? Contact us at support@reviewboost.in
+          Questions? Contact us at support@justhustle.in
         </p>
       </div>
     </div>

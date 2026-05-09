@@ -33,7 +33,7 @@ export function AnimatedCounter({ target, label, delay = 0 }: AnimatedCounterPro
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div className="h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
       </div>
-      <p className="relative font-display text-5xl font-bold gradient-text-violet">{target}</p>
+      <p className="relative font-display text-5xl font-bold text-signature-forest">{target}</p>
       <p className="relative mt-2 text-sm uppercase tracking-widest text-ink-muted">{label}</p>
     </motion.div>
   );

@@ -9,45 +9,47 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ReviewBoost - Turn Happy Customers Into 5-Star Google Reviews",
+  title: "JustHustle - Professional Reputation Management for Indian Businesses",
   description:
-    "One QR code. AI-crafted review drafts. Authentic 5-star Google reviews in seconds, built for premium local brands in India.",
+    "Collect authentic Google reviews, manage customer feedback privately, and grow your online presence with a simple QR code flow. Built for Indian businesses by Goself.",
   keywords: [
     "google reviews",
+    "reputation management",
     "local SEO",
-    "review automation",
-    "AI reviews",
+    "review management",
+    "customer feedback",
     "QR code reviews",
     "business reviews",
-    "customer feedback",
+    "Indian businesses",
+    "private feedback channel",
   ],
-  authors: [{ name: "ReviewBoost" }],
-  creator: "ReviewBoost",
+  authors: [{ name: "Goself" }],
+  creator: "Goself",
   openGraph: {
-    title: "ReviewBoost - Turn Happy Customers Into 5-Star Reviews",
+    title: "JustHustle - Professional Reputation Management for Indian Businesses",
     description:
-      "One QR code. AI-crafted review drafts. Posted to Google in seconds.",
+      "Collect authentic Google reviews, manage customer feedback privately, and grow your online presence transparently.",
     type: "website",
-    url: "https://reviewboost.in",
-    siteName: "ReviewBoost",
+    url: "https://justhustle.in",
+    siteName: "JustHustle",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ReviewBoost - AI-powered Google Reviews",
+        alt: "JustHustle - Professional Reputation Management",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ReviewBoost - Turn Happy Customers Into 5-Star Reviews",
+    title: "JustHustle - Professional Reputation Management for Indian Businesses",
     description:
-      "One QR code. AI-crafted review drafts. Posted to Google in seconds.",
+      "Collect authentic Google reviews, manage customer feedback privately, and grow your online presence transparently.",
     images: ["/og-image.png"],
   },
   alternates: {
-    canonical: "https://reviewboost.in",
+    canonical: "https://justhustle.in",
   },
 };
 

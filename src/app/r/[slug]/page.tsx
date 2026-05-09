@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: ReviewPageProps) {
   }
 
   return {
-    title: `Review ${business.name} | ReviewBoost`,
+    title: `Review ${business.name} | JustHustle`,
     description:
       business.description || `Share your experience with ${business.name}`,
     openGraph: {

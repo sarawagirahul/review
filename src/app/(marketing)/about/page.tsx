@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, HeartHandshake, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { CircleCheck as CheckCircle2, HeartHandshake, ShieldCheck, Sparkles, Users, Building2 } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { Section } from "@/components/ui/Section";
@@ -35,25 +35,26 @@ const stats = [
 ];
 
 const process = [
-  "Connect your Google Business Profile in minutes.",
+  "Connect your Google Business Profile securely via OAuth 2.0.",
   "Share one QR code at checkout or billing desk.",
-  "Route happy customers to Google and capture private feedback from others.",
+  "Customers can post authentic reviews on Google or share private feedback directly with you.",
   "Track growth and improve service from one dashboard.",
 ];
 
 export const metadata: Metadata = {
-  title: "About ReviewBoost | Our Mission and Values",
+  title: "About JustHustle | Our Mission and Values",
   description:
-    "Learn how ReviewBoost helps local businesses in India grow authentic Google reviews with a simple QR flow, AI-assisted writing, and customer-first principles.",
+    "Learn how JustHustle by Goself helps local businesses in India manage their online reputation with authentic Google reviews, private feedback, and customer-first principles.",
   keywords: [
-    "about reviewboost",
+    "about justhustle",
+    "goself",
     "google review platform",
     "local business reputation",
     "customer feedback software",
     "india local seo",
   ],
   openGraph: {
-    title: "About ReviewBoost | Mission, Values, and Approach",
+    title: "About JustHustle | Mission, Values, and Approach",
     description:
       "We help local teams collect authentic Google reviews and actionable feedback through a thoughtful, customer-first workflow.",
     type: "website",
@@ -67,17 +68,17 @@ export default function AboutPage() {
       <main className="flex-1 bg-canvas">
         <Section className="pt-32 pb-16 md:pb-20">
           <div className="max-w-4xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-hairline bg-surface-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-hairline bg-surface-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-signature-forest">
               <Sparkles className="h-3.5 w-3.5" />
-              About ReviewBoost
+              About JustHustle
             </div>
             <h1 className="text-4xl font-display tracking-tight text-ink md:text-6xl">
               Helping local businesses earn trust, one real review at a time.
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted">
-              ReviewBoost started with a simple idea: great businesses deserve better word-of-mouth in the digital
-              world. We build tools that make it easier to turn happy customer moments into authentic online
-              reputation growth.
+              JustHustle started with a simple idea: great businesses deserve better word-of-mouth
+              in the digital world. We build tools that make it easier to turn happy customer
+              moments into authentic online reputation growth.
             </p>
           </div>
         </Section>
@@ -85,30 +86,76 @@ export default function AboutPage() {
         <Section className="py-10">
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
-              <article key={stat.label} className="rounded-2xl border border-hairline bg-white p-6 shadow-[0_6px_30px_rgba(18,18,23,0.03)]">
-                <p className="text-3xl font-display font-semibold tracking-tight text-ink">{stat.value}</p>
+              <article
+                key={stat.label}
+                className="rounded-2xl border border-hairline bg-white p-6 shadow-[0_6px_30px_rgba(18,18,23,0.03)]"
+              >
+                <p className="text-3xl font-display font-semibold tracking-tight text-ink">
+                  {stat.value}
+                </p>
                 <p className="mt-2 text-sm text-muted">{stat.label}</p>
               </article>
             ))}
           </div>
         </Section>
 
+        {/* Developer Info */}
+        <Section className="py-10">
+          <div className="rounded-2xl border border-hairline bg-surface-soft p-8 md:p-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-signature-forest/10">
+                <Building2 className="h-5 w-5 text-signature-forest" />
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-signature-forest">
+                  Developer
+                </p>
+              </div>
+            </div>
+            <h2 className="text-2xl font-display tracking-tight text-ink">
+              Built by Goself, Bengaluru
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-muted">
+              JustHustle is developed and maintained by Goself, a technology company based in
+              Bengaluru, Karnataka, India. We are committed to building transparent, secure, and
+              policy-compliant tools for Indian businesses.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted">
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="h-4 w-4 text-signature-forest" />
+                Google API Services User Data Policy compliant
+              </span>
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="h-4 w-4 text-signature-forest" />
+                OAuth 2.0 secure authentication
+              </span>
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="h-4 w-4 text-signature-forest" />
+                No password storage
+              </span>
+            </div>
+          </div>
+        </Section>
+
         <Section className="py-16">
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary">Our mission</p>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-signature-forest">
+                Our mission
+              </p>
               <h2 className="text-3xl font-display tracking-tight text-ink md:text-4xl">
                 Make reputation growth practical for every neighborhood business.
               </h2>
               <p className="mt-5 text-base leading-relaxed text-muted">
-                We believe every small team should have enterprise-grade tools for customer trust, without enterprise
-                complexity. That&apos;s why we focus on simple onboarding, clear outcomes, and daily usability.
+                We believe every small team should have enterprise-grade tools for customer trust,
+                without enterprise complexity. That&apos;s why we focus on simple onboarding, clear
+                outcomes, and daily usability.
               </p>
             </div>
             <div className="lg:col-span-7 grid gap-5 md:grid-cols-3">
               {values.map(({ title, description, icon: Icon }) => (
                 <article key={title} className="rounded-2xl border border-hairline bg-surface-soft p-6">
-                  <div className="mb-4 inline-flex rounded-lg bg-primary/10 p-2 text-primary">
+                  <div className="mb-4 inline-flex rounded-lg bg-signature-forest/10 p-2 text-signature-forest">
                     <Icon className="h-4 w-4" />
                   </div>
                   <h3 className="text-lg font-medium text-ink">{title}</h3>
@@ -122,17 +169,24 @@ export default function AboutPage() {
         <Section className="py-12">
           <div className="grid gap-8 rounded-3xl border border-hairline bg-white p-8 md:p-10 lg:grid-cols-2">
             <div>
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary">How we work</p>
-              <h2 className="text-3xl font-display tracking-tight text-ink">A process your team can run every day.</h2>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-signature-forest">
+                How we work
+              </p>
+              <h2 className="text-3xl font-display tracking-tight text-ink">
+                A process your team can run every day.
+              </h2>
               <p className="mt-4 text-base leading-relaxed text-muted">
-                We pair onboarding guidance with a repeatable workflow that keeps your review pipeline active and your
-                service quality visible.
+                We pair onboarding guidance with a repeatable workflow that keeps your review
+                pipeline active and your service quality visible.
               </p>
             </div>
             <ol className="flex flex-col gap-4">
               {process.map((step) => (
-                <li key={step} className="flex items-start gap-3 rounded-xl bg-canvas p-4 text-sm text-ink">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <li
+                  key={step}
+                  className="flex items-start gap-3 rounded-xl bg-canvas p-4 text-sm text-ink"
+                >
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-signature-forest" />
                   <span>{step}</span>
                 </li>
               ))}
@@ -142,16 +196,24 @@ export default function AboutPage() {
 
         <Section className="pt-10 pb-24">
           <div className="rounded-3xl border border-hairline bg-surface-soft p-8 text-center md:p-12">
-            <h2 className="text-3xl font-display tracking-tight text-ink md:text-4xl">Ready to build a stronger reputation?</h2>
+            <h2 className="text-3xl font-display tracking-tight text-ink md:text-4xl">
+              Ready to build a stronger reputation?
+            </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              Start with a free trial and see how quickly your team can collect quality Google reviews and meaningful
-              customer insights.
+              Start with a free trial and see how quickly your team can collect quality Google
+              reviews and meaningful customer insights.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Button asChild>
+              <Button
+                asChild
+                className="bg-signature-forest hover:bg-signature-forest/90"
+              >
                 <Link href="/login">Start free trial</Link>
               </Button>
-              <Link href="/contact" className="text-sm font-medium text-ink underline-offset-4 hover:underline">
+              <Link
+                href="/contact"
+                className="text-sm font-medium text-ink underline-offset-4 hover:underline"
+              >
                 Talk to our team
               </Link>
             </div>

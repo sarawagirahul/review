@@ -57,7 +57,7 @@ export function QRCode({
       
       const pngFile = canvas.toDataURL("image/png");
       const downloadLink = document.createElement("a");
-      downloadLink.download = `reviewboost-qr-${slug}.png`;
+      downloadLink.download = `justhustle-qr-${slug}.png`;
       downloadLink.href = `${pngFile}`;
       downloadLink.click();
     };

@@ -67,14 +67,14 @@ export async function POST(req: Request) {
     if (ownerEmail) {
       try {
         await resend.emails.send({
-          from: "ReviewBoost <noreply@reviewboost.in>",
+          from: "JustHustle <noreply@justhustle.in>",
           to: ownerEmail,
-          subject: `New Feedback for ${business.name} from ReviewBoost`,
+          subject: `New Feedback for ${business.name} from JustHustle`,
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto;">
               <h2>New Private Feedback</h2>
               <p>Hi ${ownerName},</p>
-              <p>You received new feedback from a customer on ReviewBoost:</p>
+              <p>You received new feedback from a customer on JustHustle:</p>
               
               <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <p><strong>Rating:</strong> ${rating ? `${rating} stars` : "Not specified"}</p>
@@ -82,9 +82,9 @@ export async function POST(req: Request) {
                 <p style="margin: 10px 0; line-height: 1.6;">${feedback}</p>
               </div>
               
-              <p><a href="https://reviewboost.in/dashboard/feedback" style="color: #6366f1;">View all feedback →</a></p>
+              <p><a href="https://justhustle.in/dashboard/feedback" style="color: #6366f1;">View all feedback →</a></p>
               
-              <p>Best regards,<br/>ReviewBoost Team</p>
+              <p>Best regards,<br/>JustHustle Team</p>
             </div>
           `,
         });

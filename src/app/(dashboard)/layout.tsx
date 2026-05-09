@@ -101,7 +101,7 @@ export default async function DashboardLayout({
                   >
                     Upgrade now
                   </Link>{" "}
-                  to continue using ReviewBoost.
+                  to continue using JustHustle.
                 </>
               )}
             </p>
@@ -111,7 +111,7 @@ export default async function DashboardLayout({
       <div className="flex flex-1">
         <aside className="w-64 border-r border-hairline bg-surface-soft p-6 hidden md:flex md:flex-col">
           <div className="font-display text-xl font-bold text-ink mb-10 flex items-center gap-2">
-            ReviewBoost
+            JustHustle
           </div>
           <nav className="space-y-2 text-sm font-medium text-muted flex-1 flex flex-col">
             <Link

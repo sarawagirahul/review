@@ -104,7 +104,7 @@ export function BusinessCard({
 
       <div className="flex gap-2 text-xs">
         <code className="flex-1 px-3 py-2 rounded-lg bg-surface-soft text-ink font-mono truncate">
-          reviewboost.in/r/{qrSlug}
+          justhustle.in/r/{qrSlug}
         </code>
       </div>
     </motion.div>

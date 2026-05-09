@@ -19,21 +19,21 @@ export async function POST(req: Request) {
 
     switch (type) {
       case "trial_ending":
-        subject = `Your ReviewBoost Trial Expires in ${data.daysRemaining} Days`;
+        subject = `Your JustHustle Trial Expires in ${data.daysRemaining} Days`;
         html = `
           <p>Hi ${data.businessOwnerName},</p>
-          <p>Your ReviewBoost trial expires in <strong>${data.daysRemaining} days</strong>.</p>
+          <p>Your JustHustle trial expires in <strong>${data.daysRemaining} days</strong>.</p>
           <p>Upgrade now to continue collecting authentic reviews from your customers.</p>
-          <a href="https://reviewboost.in/dashboard/billing" style="display: inline-block; background-color: #6366f1; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none;">Upgrade Now</a>
+          <a href="https://justhustle.in/dashboard/billing" style="display: inline-block; background-color: #6366f1; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none;">Upgrade Now</a>
         `;
         break;
 
       case "trial_expired":
-        subject = "Your ReviewBoost Trial Has Expired";
+        subject = "Your JustHustle Trial Has Expired";
         html = `
           <p>Hi ${data.businessOwnerName},</p>
           <p>Your trial has ended. Upgrade to a paid plan to keep collecting reviews.</p>
-          <a href="https://reviewboost.in/dashboard/billing" style="display: inline-block; background-color: #ef4444; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none;">Upgrade Now</a>
+          <a href="https://justhustle.in/dashboard/billing" style="display: inline-block; background-color: #ef4444; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none;">Upgrade Now</a>
         `;
         break;
 
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
           <div style="background-color: #f3f4f6; padding: 16px; border-left: 4px solid #6366f1; margin: 20px 0;">
             <p>"${data.feedback}"</p>
           </div>
-          <a href="https://reviewboost.in/dashboard/feedback" style="display: inline-block; background-color: #6366f1; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none;">View Feedback</a>
+          <a href="https://justhustle.in/dashboard/feedback" style="display: inline-block; background-color: #6366f1; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none;">View Feedback</a>
         `;
         break;
 
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
         html = `
           <p>Hi ${data.businessOwnerName},</p>
           <p>Your recent payment failed. Please update your payment method to avoid service interruption.</p>
-          <a href="https://reviewboost.in/dashboard/billing" style="display: inline-block; background-color: #f97316; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none;">Update Payment</a>
+          <a href="https://justhustle.in/dashboard/billing" style="display: inline-block; background-color: #f97316; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none;">Update Payment</a>
         `;
         break;
 
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
     }
 
     const result = await resend.emails.send({
-      from: "ReviewBoost <noreply@reviewboost.in>",
+      from: "JustHustle <noreply@justhustle.in>",
       to,
       subject,
       html: `
@@ -74,7 +74,7 @@ export async function POST(req: Request) {
           <div style="background-color: #f9fafb; padding: 40px 20px;">
             ${html}
             <p style="margin-top: 40px; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; padding-top: 20px;">
-              ReviewBoost | <a href="https://reviewboost.in" style="color: #6366f1;">reviewboost.in</a>
+              JustHustle | <a href="https://justhustle.in" style="color: #6366f1;">justhustle.in</a>
             </p>
           </div>
         </div>

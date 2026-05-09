@@ -93,7 +93,7 @@ export default async function BillingPage() {
             Billing & Subscription
           </h1>
           <p className="text-muted mt-1">
-            Manage your ReviewBoost subscription
+            Manage your JustHustle subscription
           </p>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default async function BillingPage() {
                 : `Your trial expires in ${daysUntilExpiry} days`}
           </p>
           <p className="text-sm mt-2 opacity-90">
-            Upgrade now to continue using ReviewBoost without interruption
+            Upgrade now to continue using JustHustle without interruption
           </p>
         </div>
       )}

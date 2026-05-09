@@ -294,7 +294,7 @@ export function ReviewPageClient({ business }: ReviewPageClientProps) {
             transition={{ delay: 0.5 }}
             className="mt-8 text-center text-sm text-muted"
           >
-            <p>Powered by ReviewBoost - Making authentic reviews easy</p>
+            <p>Powered by JustHustle - Making authentic reviews easy</p>
           </motion.div>
         </motion.div>
       </div>
