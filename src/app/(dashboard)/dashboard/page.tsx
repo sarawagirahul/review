@@ -27,20 +27,20 @@ export default async function DashboardOverview() {
   const totalScans = businesses.reduce((sum, b) => sum + (b.total_scans || 0), 0);
   
   return (
-    <div>
-      <div className="mb-8 flex items-center justify-between">
+    <div className="max-w-6xl mx-auto">
+      <div className="mb-12 flex items-center justify-between">
         <div>
           <h1 className="font-display text-3xl font-medium text-ink mb-2">Overview</h1>
-          <p className="text-body text-sm">Here's what's happening across your businesses today.</p>
+          <p className="text-body">Here's what's happening across your businesses today.</p>
         </div>
         <Link href="/dashboard/setup">
-          <Button className="gap-2">
+          <Button className="gap-2 bg-ink text-white rounded-xl hover:bg-ink/90">
             <Plus className="h-4 w-4" /> Add Business
           </Button>
         </Link>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3 mb-10">
+      <div className="grid gap-6 md:grid-cols-3 mb-16">
         <div className="rounded-2xl border border-hairline bg-canvas p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-4 text-muted">
             <BarChart3 className="h-5 w-5" />
@@ -64,25 +64,25 @@ export default async function DashboardOverview() {
         </div>
       </div>
 
-      <h2 className="font-display text-xl font-medium text-ink mb-6">Your Businesses</h2>
+      <h2 className="font-display text-2xl font-medium text-ink mb-6">Your Businesses</h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {businesses.map((business) => (
           <div key={business.id} className="rounded-2xl border border-hairline bg-canvas p-6 shadow-sm flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="font-medium text-ink text-lg">{business.name}</h3>
-                <p className="text-sm text-muted">{business.city}</p>
+                <h3 className="font-medium text-ink text-xl mb-1">{business.name}</h3>
+                <p className="text-sm text-muted">{business.city || 'Location not set'}</p>
               </div>
             </div>
             
             <div className="mt-auto pt-6 border-t border-hairline flex gap-2">
               <Link href={`/dashboard/businesses/${business.id}`} className="flex-1">
-                <Button variant="secondary" size="sm" className="w-full">
+                <Button variant="secondary" className="w-full bg-white border border-hairline text-ink rounded-xl hover:bg-surface-soft">
                   Manage
                 </Button>
               </Link>
               <Link href={`/dashboard/businesses/${business.id}/reviews`}>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" className="rounded-xl text-ink hover:bg-surface-soft">
                   Reviews
                 </Button>
               </Link>

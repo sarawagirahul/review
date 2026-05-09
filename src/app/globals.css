@@ -30,11 +30,11 @@
   --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-pill: 9999px;
   --radius-full: 9999px;
-  --shadow-subtle: 0 22px 70px rgba(24, 29, 38, 0.08);
+  --shadow-subtle: 0 8px 32px 0 rgba(8, 145, 178, 0.05);
 }
 
 @layer base {
