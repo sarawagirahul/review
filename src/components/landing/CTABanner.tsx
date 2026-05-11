@@ -1,48 +1,62 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import { Shield } from "lucide-react";
+import { Lock, Check } from "lucide-react";
 
 export function CTABanner() {
   return (
-    <section className="bg-canvas py-24">
+    <section className="bg-night-raised py-24">
       <div className="mx-auto max-w-5xl px-6 md:px-12">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.97 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-[2rem] bg-signature-forest px-8 py-16 text-center shadow-2xl md:px-16 md:py-20"
+          className="relative overflow-hidden rounded-[2rem] border border-night-accent/20 bg-white/[0.04] px-8 py-16 text-center shadow-[0_0_80px_rgba(34,197,94,0.08)] md:px-16 md:py-20"
         >
+          {/* Ambient glows */}
+          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-night-accent/[0.08] blur-[80px]" />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#8b5cf6]/[0.06] blur-[80px]" />
+
           <div className="relative z-10">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white/80">
-              <Shield className="h-4 w-4" />
-              OAuth 2.0 Secure &bull; Google API Compliant
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.05] px-4 py-2 text-sm text-night-muted">
+              <Lock className="h-4 w-4 text-night-accent" />
+              OAuth 2.0 Secure &bull; Official Google Business Profile API
             </div>
-            <h2 className="mb-6 font-display text-4xl font-medium text-white md:text-5xl">
+
+            <h2 className="mb-6 font-display text-4xl font-bold text-night-text md:text-5xl">
               Ready to manage your reputation professionally?
             </h2>
-            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/80">
-              Join 1,200+ Indian businesses using JustHustle to collect authentic Google reviews,
-              manage customer feedback, and grow their online presence transparently.
+
+            <p className="mx-auto mb-8 max-w-2xl text-lg text-night-muted">
+              Join 1,200+ Indian businesses using JustHustle to manage their Google Business Profile, collect authentic customer reviews, and respond professionally — all from one secure platform.
             </p>
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button
-                size="lg"
-                className="bg-white text-signature-forest hover:bg-surface-soft"
-                asChild
-              >
-                <Link href="/login">Start your 7-day free trial</Link>
-              </Button>
+
+            <div className="mb-10 flex flex-wrap justify-center gap-3">
+              {["Google API Compliant", "No Review Gating", "OAuth 2.0 Verified", "Data never sold"].map((badge) => (
+                <span
+                  key={badge}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-night-muted"
+                >
+                  <Check className="h-3 w-3 text-night-accent" />
+                  {badge}
+                </span>
+              ))}
             </div>
-            <p className="mt-4 text-sm text-white/50">
-              No credit card required &bull; Cancel anytime
+
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="/login"
+                className="inline-flex items-center rounded-full bg-night-accent px-10 py-4 text-base font-semibold text-night transition-all hover:bg-night-accent-hover"
+              >
+                Start your 7-day free trial
+              </Link>
+            </motion.div>
+
+            <p className="mt-4 text-sm text-night-subtle">
+              No credit card required &bull; Cancel anytime &bull; All features included
             </p>
           </div>
-
-          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
-          <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </motion.div>
       </div>
     </section>

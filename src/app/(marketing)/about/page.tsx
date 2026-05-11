@@ -44,7 +44,7 @@ const process = [
 export const metadata: Metadata = {
   title: "About JustHustle | Our Mission and Values",
   description:
-    "Learn how JustHustle by Goself helps local businesses in India manage their online reputation with authentic Google reviews, private feedback, and customer-first principles.",
+    "Learn about JustHustle — professional reputation management software for Indian businesses by Goself Technologies, Bengaluru. Official Google Business Profile API integration.",
   keywords: [
     "about justhustle",
     "goself",
@@ -113,12 +113,19 @@ export default function AboutPage() {
               </div>
             </div>
             <h2 className="text-2xl font-display tracking-tight text-ink">
-              Built by Goself, Bengaluru
+              Built by Goself Technologies, Bengaluru
             </h2>
             <p className="mt-3 text-base leading-relaxed text-muted">
-              JustHustle is developed and maintained by Goself, a technology company based in
-              Bengaluru, Karnataka, India. We are committed to building transparent, secure, and
-              policy-compliant tools for Indian businesses.
+              JustHustle is developed and maintained by{" "}
+              <strong className="text-ink">Goself Technologies</strong>, a software company based
+              in Bengaluru, Karnataka 560001, India. We are committed to building transparent,
+              secure, and policy-compliant tools for Indian businesses.
+            </p>
+            <p className="mt-2 text-sm text-muted">
+              Contact:{" "}
+              <a href="mailto:support@justhustle.in" className="underline hover:text-ink">
+                support@justhustle.in
+              </a>
             </p>
             <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted">
               <span className="flex items-center gap-1">

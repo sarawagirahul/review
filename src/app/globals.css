@@ -26,6 +26,16 @@
   --color-signature-mustard: #d9a441;
   --font-sans: var(--font-inter);
   --font-display: var(--font-inter);
+
+  /* Night palette — used by marketing/landing pages */
+  --color-night: #07091a;
+  --color-night-raised: #0c1128;
+  --color-night-card: #0f1629;
+  --color-night-text: #f0f4ff;
+  --color-night-muted: #94a3b8;
+  --color-night-subtle: #64748b;
+  --color-night-accent: #22c55e;
+  --color-night-accent-hover: #16a34a;
   --spacing-section: 96px;
   --radius-xs: 4px;
   --radius-sm: 6px;

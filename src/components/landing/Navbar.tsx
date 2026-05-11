@@ -31,21 +31,21 @@ export function Navbar() {
         style={{ zIndex: 100 }}
         className={`fixed inset-x-0 top-0 transition-all duration-500 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-lg border-b border-hairline shadow-sm"
+            ? "bg-night/90 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_1px_0_rgba(255,255,255,0.04)]"
             : "bg-transparent"
         }`}
       >
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6 md:px-12">
           <Link href="/" className="group flex items-center gap-2.5">
             <motion.div
-              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileHover={{ scale: 1.08, rotate: 4 }}
               transition={{ type: "spring", stiffness: 400 }}
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-signature-forest"
+              className="flex h-8 w-8 items-center justify-center rounded-lg bg-night-accent"
             >
-              <Shield className="h-4 w-4 text-white" />
+              <Shield className="h-4 w-4 text-night" />
             </motion.div>
-            <span className="font-display text-lg font-semibold tracking-tight text-ink">
-              Just<span className="text-signature-forest">Hustle</span>
+            <span className="font-display text-lg font-semibold tracking-tight text-night-text">
+              Just<span className="text-night-accent">Hustle</span>
             </span>
           </Link>
 
@@ -54,12 +54,9 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative text-muted transition-colors duration-200 hover:text-ink"
+                className="text-night-muted transition-colors duration-200 hover:text-night-text"
               >
-                <span className="group">
-                  {link.label}
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-signature-forest transition-all duration-300 group-hover:w-full" />
-                </span>
+                {link.label}
               </Link>
             ))}
           </div>
@@ -67,7 +64,7 @@ export function Navbar() {
           <div className="hidden items-center gap-3 md:flex">
             <Link
               href="/login"
-              className="text-sm text-muted transition-colors hover:text-ink"
+              className="text-sm text-night-muted transition-colors hover:text-night-text"
             >
               Log in
             </Link>
@@ -75,18 +72,22 @@ export function Navbar() {
               href="#pricing"
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
-              className="rounded-lg bg-signature-forest px-4 py-2 text-sm font-medium text-white transition-shadow hover:shadow-lg"
+              className="rounded-full bg-night-accent px-5 py-2 text-sm font-semibold text-night transition-all hover:bg-night-accent-hover"
             >
               Start free trial
             </motion.a>
           </div>
 
           <button
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-hairline bg-white md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.1] bg-white/[0.05] md:hidden"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X className="h-4 w-4 text-ink" /> : <Menu className="h-4 w-4 text-ink" />}
+            {mobileOpen ? (
+              <X className="h-4 w-4 text-night-text" />
+            ) : (
+              <Menu className="h-4 w-4 text-night-text" />
+            )}
           </button>
         </div>
       </motion.nav>
@@ -94,11 +95,11 @@ export function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -16 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-x-4 top-20 z-[99] rounded-2xl bg-white p-6 shadow-xl border border-hairline md:hidden"
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22 }}
+            className="fixed inset-x-4 top-20 z-[99] rounded-2xl bg-night-card border border-white/[0.1] p-6 shadow-2xl md:hidden"
           >
             <div className="flex flex-col gap-5">
               {navLinks.map((link) => (
@@ -106,17 +107,19 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-base text-muted hover:text-ink"
+                  className="text-base text-night-muted hover:text-night-text"
                 >
                   {link.label}
                 </Link>
               ))}
-              <div className="mt-2 flex flex-col gap-3 border-t border-hairline pt-4">
-                <Link href="/login" className="text-sm text-muted">Log in</Link>
+              <div className="mt-2 flex flex-col gap-3 border-t border-white/[0.08] pt-4">
+                <Link href="/login" className="text-sm text-night-muted">
+                  Log in
+                </Link>
                 <a
                   href="#pricing"
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-lg bg-signature-forest py-2.5 text-center text-sm font-medium text-white"
+                  className="rounded-full bg-night-accent py-2.5 text-center text-sm font-semibold text-night"
                 >
                   Start free trial
                 </a>
