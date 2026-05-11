@@ -2,23 +2,42 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
+  const pathname = request.nextUrl.pathname
+
+  // Public routes — skip Supabase init entirely
+  if (
+    pathname === '/' ||
+    pathname === '/login' ||
+    pathname === '/about' ||
+    pathname === '/contact' ||
+    pathname === '/privacy' ||
+    pathname === '/terms' ||
+    pathname.startsWith('/r/') ||
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/_next/') ||
+    pathname.includes('.')
+  ) {
+    return NextResponse.next({ request })
+  }
+
+  // Guard: if Supabase env vars are missing, allow through (dev without .env.local)
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.next({ request })
+  }
+
+  let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     {
       cookies: {
         getAll() {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
+          supabaseResponse = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           )
@@ -30,20 +49,6 @@ export async function middleware(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-
-  const pathname = request.nextUrl.pathname
-
-  // Public routes that don't need auth checking
-  if (
-    pathname === '/' ||
-    pathname === '/login' ||
-    pathname.startsWith('/r/') ||
-    pathname.startsWith('/api/') ||
-    pathname.startsWith('/_next/') ||
-    pathname.includes('.')
-  ) {
-    return supabaseResponse
-  }
 
   // Protect /dashboard/* — owners only
   if (pathname.startsWith('/dashboard')) {
