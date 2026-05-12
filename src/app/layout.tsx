@@ -9,6 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://justhustle.in"),
   title: "JustHustle — Professional Reputation Management for Indian Businesses",
   description:
     "JustHustle is a professional reputation management platform for Indian businesses. Connect your Google Business Profile via official API, collect authentic reviews, and manage customer feedback — built by Goself Technologies, Bengaluru.",
