@@ -8,12 +8,6 @@ export async function POST(req: Request) {
     key_secret: process.env.RAZORPAY_KEY_SECRET || "",
   });
   try {
-    const { planId, customerId, totalCount } = await req.json();
-
-    if (!planId) {
-      return NextResponse.json({ error: "Missing plan ID" }, { status: 400 });
-    }
-
     const supabase = await createClient();
     const {
       data: { user },
@@ -23,7 +17,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Fetch user details
+    const { plan } = await req.json();
+
+    if (!plan || (plan !== "monthly" && plan !== "annual")) {
+      return NextResponse.json({ error: "Missing or invalid plan" }, { status: 400 });
+    }
+
+    const planId =
+      plan === "annual"
+        ? process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_ANNUAL
+        : process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_MONTHLY;
+
+    if (!planId) {
+      return NextResponse.json({ error: "Plan ID not configured" }, { status: 500 });
+    }
+
+    // Get or create Razorpay customer
     const { data: ownerDetails } = await supabase
       .from("owner_details")
       .select("razorpay_customer_id")
@@ -32,22 +41,22 @@ export async function POST(req: Request) {
 
     let razorpayCustomerId = ownerDetails?.razorpay_customer_id;
 
-    // Create customer if not exists
-    if (!razorpayCustomerId) {
-      const { data: userData } = await supabase
-        .from("users")
-        .select("email, full_name")
-        .eq("id", user.id)
-        .single();
+    // Fetch user details (needed for customer creation and notify_info)
+    const { data: userData } = await supabase
+      .from("users")
+      .select("full_name, email, phone")
+      .eq("id", user.id)
+      .single();
 
+    if (!razorpayCustomerId) {
       const customer = await razorpay.customers.create({
-        email: userData?.email,
         name: userData?.full_name || "Customer",
+        email: userData?.email,
+        contact: userData?.phone,
       });
 
       razorpayCustomerId = customer.id;
 
-      // Save customer ID
       await supabase
         .from("owner_details")
         .update({ razorpay_customer_id: razorpayCustomerId })
@@ -59,13 +68,16 @@ export async function POST(req: Request) {
       plan_id: planId,
       customer_notify: 1,
       quantity: 1,
-      total_count: totalCount || 12, // 12 months for annual, 1 for monthly
-      addons: [],
+      total_count: plan === "annual" ? 1 : 120,
+      notify_info: {
+        notify_phone: userData?.phone,
+        notify_email: userData?.email,
+      },
     });
 
     return NextResponse.json({
       subscriptionId: subscription.id,
-      shortUrl: subscription.short_url,
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
     });
   } catch (error) {
     console.error("Subscription creation error:", error);

@@ -44,6 +44,36 @@ interface OwnerDetails {
 export default function BillingPage() {
   const [ownerDetails, setOwnerDetails] = useState<OwnerDetails | null>(null);
   const [isSubscribing, setIsSubscribing] = useState<string | null>(null);
+  const [ownerInfo, setOwnerInfo] = useState<{ name: string; email: string; phone: string } | null>(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
+
+  // Load Razorpay script on mount
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  // Check for payment success query param
+  useEffect(() => {
+    const success =
+      new URLSearchParams(window.location.search).get("payment") === "success";
+    setPaymentSuccess(success);
+    setShowBanner(success);
+  }, []);
+
+  // Auto-hide success banner after 5 seconds
+  useEffect(() => {
+    if (paymentSuccess) {
+      const timer = setTimeout(() => setShowBanner(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [paymentSuccess]);
 
   useEffect(() => {
     const supabase = createBrowserClient(
@@ -53,6 +83,15 @@ export default function BillingPage() {
 
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) return;
+
+      // Store user email/name for Razorpay prefill
+      setOwnerInfo({
+        name:
+          (user.user_metadata?.full_name as string) || user.email || "",
+        email: user.email || "",
+        phone: "",
+      });
+
       supabase
         .from("owner_details")
         .select(
@@ -80,18 +119,43 @@ export default function BillingPage() {
         )
       : null;
 
-  const handleSubscribe = async (interval: "monthly" | "annual") => {
-    setIsSubscribing(interval);
+  const handleSubscribe = async (plan: "monthly" | "annual") => {
+    setIsSubscribing(plan);
     try {
       const res = await fetch("/api/razorpay/create-subscription", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ interval }),
+        body: JSON.stringify({ plan }),
       });
-      const data = await res.json();
-      if (data.shortUrl) {
-        window.open(data.shortUrl, "_blank");
+      if (!res.ok) {
+        alert("Failed to start subscription. Please try again.");
+        return;
       }
+      const { subscriptionId, key } = await res.json();
+
+      const options = {
+        key,
+        subscription_id: subscriptionId,
+        name: "JustHustle",
+        description:
+          plan === "annual"
+            ? "Annual Plan — ₹4,999/year"
+            : "Monthly Plan — ₹599/month",
+        image: "/logo.svg",
+        handler: function () {
+          window.location.href = "/dashboard/billing?payment=success";
+        },
+        prefill: {
+          name: ownerInfo?.name || "",
+          email: ownerInfo?.email || "",
+          contact: ownerInfo?.phone || "",
+        },
+        theme: { color: "#E68369" },
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
     } catch {
       alert("Failed to start subscription. Please try again.");
     } finally {
@@ -124,6 +188,22 @@ export default function BillingPage() {
           </p>
         </div>
       </motion.div>
+
+      {/* Payment success banner */}
+      {showBanner && (
+        <motion.div
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -16 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="rounded-2xl border-2 border-signature-forest/20 bg-signature-forest/5 p-4 flex items-center gap-3"
+        >
+          <Check className="h-5 w-5 text-signature-forest shrink-0" />
+          <p className="text-sm font-semibold text-signature-forest">
+            Payment successful! Your subscription is now active.
+          </p>
+        </motion.div>
+      )}
 
       {/* Trial status banner */}
       {isOnTrial && daysRemaining !== null && (

@@ -1,9 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 
 export async function POST(req: Request) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const { businessId, feedback, rating } = await req.json();
 
@@ -56,42 +54,24 @@ export async function POST(req: Request) {
       );
     }
 
-    // Send email to business owner
-    const ownerEmail =
-      (business.owner_details as any)?.[0]?.notification_email ||
-      (business.users as any)?.[0]?.email;
-    const ownerName =
-      (business.users as any)?.[0]?.full_name || "Business Owner";
-
-    if (ownerEmail) {
-      try {
-        await resend.emails.send({
-          from: "JustHustle <noreply@justhustle.in>",
-          to: ownerEmail,
-          subject: `New Feedback for ${business.name} from JustHustle`,
-          html: `
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto;">
-              <h2>New Private Feedback</h2>
-              <p>Hi ${ownerName},</p>
-              <p>You received new feedback from a customer on JustHustle:</p>
-              
-              <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                <p><strong>Rating:</strong> ${rating ? `${rating} stars` : "Not specified"}</p>
-                <p><strong>Feedback:</strong></p>
-                <p style="margin: 10px 0; line-height: 1.6;">${feedback}</p>
-              </div>
-              
-              <p><a href="https://justhustle.in/dashboard/feedback" style="color: #6366f1;">View all feedback →</a></p>
-              
-              <p>Best regards,<br/>JustHustle Team</p>
-            </div>
-          `,
-        });
-      } catch (emailError) {
-        console.error("Failed to send email:", emailError);
-        // Don't fail the API call if email fails
-      }
-    }
+    // Fire-and-forget shield catch notification
+    fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/resend/notify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        template: 'shield_catch',
+        to: (business.owner_details as any)?.[0]?.notification_email || (business.users as any)?.[0]?.email,
+        data: {
+          ownerName: (business.users as any)?.[0]?.full_name || 'Business Owner',
+          businessName: business.name,
+          businessId: business.id,
+          rating: rating,
+          message: feedback,
+          customerContact: undefined,
+          appUrl: process.env.NEXT_PUBLIC_APP_URL,
+        },
+      }),
+    }).catch(console.error)
 
     return NextResponse.json({ success: true });
   } catch (error) {

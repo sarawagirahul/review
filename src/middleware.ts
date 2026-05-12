@@ -75,6 +75,31 @@ export async function middleware(request: NextRequest) {
     ) {
       return NextResponse.redirect(new URL('/dashboard/profile-setup', request.url))
     }
+
+    // Trial / subscription enforcement for owners
+    if (userData?.role === 'owner' && userData.phone) {
+      // Owner has completed profile — now check trial/subscription
+      const { data: ownerData } = await supabase
+        .from('owner_details')
+        .select('trial_ends_at, subscription_status')
+        .eq('user_id', user.id)
+        .single()
+
+      if (ownerData) {
+        const now = new Date()
+        const trialEnd = new Date(ownerData.trial_ends_at)
+        const gracePeriodEnd = new Date(trialEnd.getTime() + 3 * 24 * 60 * 60 * 1000)
+        const isTrialActive = now < trialEnd
+        const isInGracePeriod = now >= trialEnd && now < gracePeriodEnd
+        const isSubscriptionActive = ownerData.subscription_status === 'active'
+        const isExpired = !isTrialActive && !isInGracePeriod && !isSubscriptionActive
+
+        if (isExpired && !pathname.startsWith('/dashboard/billing') && !pathname.startsWith('/api/')) {
+          // Don't redirect — let dashboard layout handle it via header
+          supabaseResponse.headers.set('x-subscription-expired', 'true')
+        }
+      }
+    }
   }
 
   // Protect /admin/* — admin only
