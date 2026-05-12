@@ -8,13 +8,12 @@ import { useState } from "react";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
   const handleGoogleLogin = async () => {
     setIsLoading(true);
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {

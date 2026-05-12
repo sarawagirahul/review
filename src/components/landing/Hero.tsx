@@ -12,9 +12,9 @@ const trustBadges = [
 ];
 
 const stats = [
-  { val: "1,200+", label: "Businesses" },
-  { val: "50,000+", label: "Reviews managed" },
-  { val: "₹999", label: "Per month" },
+  { val: "7-day", label: "Free trial" },
+  { val: "₹599", label: "Per month" },
+  { val: "∞", label: "QR codes" },
 ];
 
 export function Hero() {
@@ -66,7 +66,7 @@ export function Hero() {
               className="mb-8 inline-flex items-center gap-2 rounded-full border border-night-accent/30 bg-night-accent/[0.08] px-4 py-2 text-sm font-medium text-night-accent"
             >
               <div className="h-1.5 w-1.5 rounded-full bg-night-accent" />
-              Official Google Business Profile API Integration
+              Powered by Google Places API
             </motion.div>
 
             <h1 className="mb-6 font-display text-5xl font-bold leading-[1.06] tracking-tight text-night-text md:text-6xl lg:text-[5rem]">

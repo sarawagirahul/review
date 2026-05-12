@@ -81,7 +81,7 @@ export async function POST(req: Request) {
       `,
     });
 
-    return NextResponse.json({ success: true, messageId: result.id });
+    return NextResponse.json({ success: true, messageId: result.data?.id });
   } catch (error) {
     console.error("Email sending error:", error);
     return NextResponse.json(

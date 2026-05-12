@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project: ReviewBoost (JustHustle)
+## Project: JustHustle
 
 A B2B SaaS platform that helps Indian small/medium businesses collect more 5-star Google reviews via AI-generated review drafts delivered through QR codes. Business owners place a QR in their shop → customers scan → get 3 AI-generated review options → submit to Google in under 30 seconds.
 

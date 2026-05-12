@@ -34,8 +34,16 @@
   --color-night-text: #f0f4ff;
   --color-night-muted: #94a3b8;
   --color-night-subtle: #64748b;
-  --color-night-accent: #22c55e;
-  --color-night-accent-hover: #16a34a;
+  --color-night-accent: #E68369;
+  --color-night-accent-hover: #d9705a;
+  --color-accent: #E68369;
+  --color-accent-hover: #d9705a;
+  --color-accent-light: #f5d5cc;
+  --color-canvas-warm: #FBF6E2;
+  --color-surface-soft: #ECCEAE;
+  --color-sidebar: #131842;
+  --color-admin-sidebar: #1E104E;
+  --color-star: #E68369;
   --spacing-section: 96px;
   --radius-xs: 4px;
   --radius-sm: 6px;
