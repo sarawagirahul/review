@@ -22,7 +22,7 @@ export function StarRating({ onRate, disabled = false }: StarRatingProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-6">
-      <div className="flex gap-4">
+      <div className="flex gap-3">
         {[1, 2, 3, 4, 5].map((star) => (
           <motion.button
             key={star}
@@ -44,8 +44,8 @@ export function StarRating({ onRate, disabled = false }: StarRatingProps) {
                 size={56}
                 className={`transition-all ${
                   star <= (hoverRating || rating)
-                    ? "fill-amber-400 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]"
-                    : "text-gray-300 fill-gray-100"
+                    ? "fill-[#E68369] text-[#E68369] drop-shadow-[0_0_8px_rgba(230,131,105,0.6)]"
+                    : "text-[#e5e0d8] fill-[#e5e0d8]"
                 }`}
               />
             </motion.div>
@@ -57,11 +57,11 @@ export function StarRating({ onRate, disabled = false }: StarRatingProps) {
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-lg font-medium text-ink"
+          className={`text-lg font-medium ${rating >= 3 ? "text-accent" : "text-muted"}`}
         >
-          {rating === 5 && "Love it! 🎉"}
+          {rating === 5 && "Excellent! 🎉"}
           {rating === 4 && "Great! 😊"}
-          {rating === 3 && "It's okay"}
+          {rating === 3 && "Good 👍"}
           {rating < 3 && "We'll help you improve 💬"}
         </motion.p>
       )}

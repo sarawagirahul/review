@@ -147,9 +147,5 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-linear-to-br from-canvas via-surface-soft to-canvas">
-      <ReviewPageClient business={business} />
-    </div>
-  );
+  return <ReviewPageClient business={business} />;
 }

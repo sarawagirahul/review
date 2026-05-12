@@ -3,9 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { businessId, event, rating, reviewIndex } = await req.json();
+    const { businessId, eventType, event, rating, reviewIndex } = await req.json();
+    const resolvedEventType = eventType || event;
 
-    if (!businessId || !event) {
+    if (!businessId || !resolvedEventType) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -14,10 +15,9 @@ export async function POST(req: Request) {
 
     const supabase = await createClient();
 
-    // Record the event
     const { error } = await supabase.from("review_events").insert({
       business_id: businessId,
-      event_type: event,
+      event_type: resolvedEventType,
       rating: rating || null,
       review_index: reviewIndex || null,
       created_at: new Date(),
@@ -31,16 +31,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Update business stats if needed
-    if (event === "review_posted") {
-      await supabase
-        .from("businesses")
-        .update({
-          total_reviews: supabase.rpc("increment_reviews"),
-          updated_at: new Date(),
-        })
-        .eq("id", businessId);
-    } else if (event === "feedback_submitted") {
+    if (resolvedEventType === "feedback_submitted") {
       await supabase
         .from("businesses")
         .update({
