@@ -35,6 +35,13 @@ export async function PATCH(
       'qr_frame_style',
       'review_page_tagline',
       'thank_you_message',
+      'description',
+      'review_page_thank_you_message',
+      'notify_email',
+      'notify_new_review',
+      'notify_shield_catch',
+      'notify_weekly_summary',
+      'is_active',
     ]
 
     const updates: Record<string, any> = {}
