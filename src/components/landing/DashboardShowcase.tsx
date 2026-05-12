@@ -152,7 +152,7 @@ export function DashboardShowcase() {
                 <div className="mx-auto" />
                 <div className="flex items-center gap-2 text-xs text-night-muted">
                   <MessageSquare className="h-3.5 w-3.5 text-night-accent" />
-                  18 AI replies sent via Google API
+                  Competitor data updated 2h ago
                 </div>
               </div>
             </div>

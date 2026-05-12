@@ -90,8 +90,8 @@ export default function TermsPage() {
                     (or in addition to) posting publicly
                   </li>
                   <li>
-                    <strong className="text-ink">AI Reply Generator</strong> — AI-assisted response
-                    suggestions for your Google reviews, powered by the Google Gemini API
+                    <strong className="text-ink">AI Review Drafts</strong> — AI-generated review
+                    options for customers to select and post, powered by the Google Gemini API
                   </li>
                   <li>
                     <strong className="text-ink">Analytics Dashboard</strong> — aggregated insights

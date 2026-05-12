@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "JustHustle — Professional Reputation Management for Indian Businesses",
     description:
-      "Connect your Google Business Profile, collect authentic customer reviews, and manage feedback professionally. Official Google Business Profile API integration.",
+      "Collect authentic Google reviews with AI-generated drafts, catch negative feedback privately with Review Shield, and grow your Google rating — powered by Google Places API.",
     type: "website",
     url: "https://justhustle.in",
     siteName: "JustHustle",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "JustHustle — Professional Reputation Management for Indian Businesses",
     description:
-      "Professional reputation management for Indian businesses. Official Google Business Profile API integration.",
+      "Google review collection for Indian businesses. AI-generated drafts, Review Shield, competitor analysis — powered by Google Places API.",
     images: ["/og-image.png"],
   },
   alternates: {

@@ -28,23 +28,23 @@ const values = [
 ];
 
 const stats = [
-  { label: "Local businesses supported", value: "1,200+" },
-  { label: "Reviews generated monthly", value: "48k+" },
-  { label: "Average response time", value: "< 10 mins" },
-  { label: "Cities across India", value: "60+" },
+  { label: "Free trial", value: "7 days" },
+  { label: "Per month", value: "₹599" },
+  { label: "QR codes per business", value: "Unlimited" },
+  { label: "Languages supported", value: "3" },
 ];
 
 const process = [
-  "Connect your Google Business Profile securely via OAuth 2.0.",
-  "Share one QR code at checkout or billing desk.",
-  "Customers can post authentic reviews on Google or share private feedback directly with you.",
-  "Track growth and improve service from one dashboard.",
+  "Sign up and add your business using a Google Maps link — we fetch your details automatically.",
+  "Place your branded QR code at checkout, on tables, or on receipts.",
+  "Customers rate their experience, get AI-generated review options, and post to Google in seconds.",
+  "Track scans, reviews, and Shield catches from your analytics dashboard.",
 ];
 
 export const metadata: Metadata = {
   title: "About JustHustle | Our Mission and Values",
   description:
-    "Learn about JustHustle — professional reputation management software for Indian businesses by Goself Technologies, Bengaluru. Official Google Business Profile API integration.",
+    "Learn about JustHustle — Google review collection software for Indian businesses by Goself Technologies, Bengaluru. Powered by Google Places API.",
   keywords: [
     "about justhustle",
     "goself",

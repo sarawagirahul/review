@@ -4,6 +4,17 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
+const features = [
+  "Unlimited QR codes",
+  "AI review generation (EN / HI / Hinglish)",
+  "Review Shield",
+  "Competitor analysis",
+  "Live analytics dashboard",
+  "Up to 3 businesses",
+  "Email notifications",
+  "Print-ready QR downloads",
+];
+
 export function Pricing() {
   const [isAnnual, setIsAnnual] = useState(true);
 
@@ -30,7 +41,7 @@ export function Pricing() {
           <div className="relative flex rounded-full border border-white/[0.1] bg-white/[0.04] p-1">
             <button
               onClick={() => setIsAnnual(false)}
-              className={`relative w-32 rounded-full py-2 text-sm font-medium transition-colors ${
+              className={`relative w-32 rounded-full py-2 text-sm font-medium transition-colors cursor-pointer ${
                 !isAnnual ? "text-night" : "text-night-muted hover:text-night-text"
               }`}
             >
@@ -45,7 +56,7 @@ export function Pricing() {
             </button>
             <button
               onClick={() => setIsAnnual(true)}
-              className={`relative w-32 rounded-full py-2 text-sm font-medium transition-colors ${
+              className={`relative w-32 rounded-full py-2 text-sm font-medium transition-colors cursor-pointer ${
                 isAnnual ? "text-night" : "text-night-muted hover:text-night-text"
               }`}
             >
@@ -59,7 +70,7 @@ export function Pricing() {
               <span className="relative z-10">Annually</span>
             </button>
             <div className="absolute -right-6 -top-3 rotate-12 rounded-full bg-night-accent px-2 py-0.5 text-xs font-bold text-night shadow-sm">
-              Save ~33%
+              Save ~30%
             </div>
           </div>
         </div>
@@ -77,11 +88,11 @@ export function Pricing() {
             <div className="relative">
               <div className="mb-6">
                 <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-night-accent/20 bg-night-accent/[0.08] px-3 py-1 text-xs font-semibold text-night-accent">
-                  Pro Plan
+                  {isAnnual ? "Annual Plan" : "Monthly Plan"}
                 </div>
                 <div className="mt-4 flex items-baseline gap-1">
                   <span className="text-5xl font-bold tracking-tight text-night-text">
-                    ₹{isAnnual ? "7,999" : "999"}
+                    ₹{isAnnual ? "4,999" : "599"}
                   </span>
                   <span className="text-sm font-medium text-night-muted">
                     /{isAnnual ? "year" : "month"}
@@ -89,22 +100,18 @@ export function Pricing() {
                 </div>
                 {isAnnual && (
                   <p className="mt-1 text-sm text-night-muted">
-                    Billed annually — save ₹3,989
+                    ~₹417/month billed annually
                   </p>
                 )}
               </div>
 
+              {/* Trial callout */}
+              <div className="mb-6 rounded-2xl border border-night-accent/20 bg-night-accent/[0.06] px-4 py-3 text-center">
+                <p className="text-sm font-semibold text-night-accent">7-day free trial — no card required</p>
+              </div>
+
               <ul className="mb-8 space-y-3.5">
-                {[
-                  "Authentic Google review collection",
-                  "Private Feedback Channel (improve service)",
-                  "AI Reply Generator for all reviews",
-                  "Custom QR code designs",
-                  "Multi-lingual review generation (EN/HI/Hinglish)",
-                  "Analytics & tracking dashboard",
-                  "Unlimited business locations",
-                  "OAuth 2.0 secure Google API access",
-                ].map((feature, i) => (
+                {features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3 text-night-muted">
                     <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-night-accent/[0.15]">
                       <Check className="h-3 w-3 text-night-accent" />
@@ -118,7 +125,7 @@ export function Pricing() {
                 href="/login"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex w-full items-center justify-center rounded-full bg-night-accent py-4 text-base font-semibold text-night transition-all hover:bg-night-accent-hover"
+                className="flex w-full items-center justify-center rounded-full bg-night-accent py-4 text-base font-semibold text-night transition-all hover:bg-night-accent-hover cursor-pointer"
               >
                 Start 7-day free trial
               </motion.a>

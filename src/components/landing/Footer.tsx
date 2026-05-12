@@ -16,7 +16,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="max-w-xs text-sm text-night-muted">
-              Professional reputation management software for Indian businesses. Built on the official Google Business Profile API.
+              Google review collection software for Indian businesses. Powered by Google Places API.
             </p>
             <div className="mt-4 space-y-2 text-sm text-night-muted">
               <div className="flex items-start gap-2">
@@ -77,7 +77,7 @@ export function Footer() {
             <div>
               <p className="mb-1 font-medium text-night-text">Google API Data Use</p>
               <p>
-                JustHustle uses the Google Business Profile API under OAuth 2.0 to access your business locations and reviews.
+                JustHustle uses Google Places API to fetch business information and Google OAuth 2.0 for secure owner sign-in.
                 We use this data solely to provide the service features you authorise. We do not sell, share, or use Google user data for advertising.
                 See our <Link href="/privacy" className="text-night-accent hover:underline">Privacy Policy</Link> for the full Google API Services disclosure.
               </p>

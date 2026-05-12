@@ -6,32 +6,28 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    q: "Is this compliant with Google's review policies?",
-    a: "Yes. JustHustle never posts reviews on behalf of customers, never blocks negative reviews from reaching Google, and never offers incentives for reviews. Customers always choose freely and post themselves. We follow Google's Review Content Guidelines and Limited Use policy to the letter.",
+    q: "How does the review collection work?",
+    a: "A customer scans your QR code, rates their experience, and our AI generates 3 review options for them. They pick one, it copies to their clipboard, and Google opens automatically — they just paste and submit.",
   },
   {
-    q: "Do you automatically post reviews for customers?",
-    a: "Never. Google's policies forbid programmatic review submission. When a customer picks a review option, it copies to their clipboard and opens Google Maps — they paste and submit themselves. We make it effortless, not automated.",
+    q: "What happens with bad reviews?",
+    a: "Ratings of 1 or 2 stars trigger Review Shield — instead of being directed to Google, the customer sees a private feedback form that goes directly to you. You can resolve the issue without it ever appearing on your Google listing.",
   },
   {
-    q: "What happens when a customer rates us 1 or 2 stars?",
-    a: "We offer them a private feedback form as an additional channel to share concerns directly with you. They remain completely free to post any review on Google at any time — we never block or hide negative reviews. The private channel is an extra option, not a gate.",
+    q: "Do I need Google's approval to use this?",
+    a: "No. JustHustle works with Google Places API which is publicly available. No special approval needed to start collecting reviews.",
   },
   {
-    q: "How do you connect to my Google Business Profile?",
-    a: "Through Google's official OAuth 2.0 flow — the same secure handshake used by apps like Gmail and Google Calendar. You sign in with your Google account, authorise the specific permissions we need, and we get a limited access token. No passwords are ever stored.",
+    q: "Can I manage multiple businesses?",
+    a: "Yes. The base plan supports up to 3 businesses, each with its own branded review page, QR codes, and analytics.",
   },
   {
-    q: "Do I need to install an app or train my staff?",
-    a: "No app, no training. You print your QR code and place it on your counter. That's it. Your staff don't need to do anything — customers handle the entire review flow on their own phones in under 30 seconds.",
+    q: "Is there a contract or lock-in?",
+    a: "No contracts. Monthly plans can be cancelled anytime. Annual plans are billed once and run for 12 months.",
   },
   {
-    q: "Can I manage multiple business locations?",
-    a: "Yes. The Pro plan includes unlimited business locations. If you run a chain of restaurants, clinics, or salons, all your Google Business Profile locations are managed from one dashboard.",
-  },
-  {
-    q: "What customer data do you store?",
-    a: "Very little. We don't require customers to create accounts. We only store the review text the customer chose (to track conversion) and the scan event timestamp for your analytics. We never sell or share customer data. See our Privacy Policy for the full disclosure.",
+    q: "What languages are supported?",
+    a: "AI-generated reviews are available in English, Hindi, and Hinglish. The dashboard and owner interface are in English.",
   },
 ];
 
@@ -48,10 +44,10 @@ function FAQItem({ faq, index }: { faq: typeof faqs[0]; index: number }) {
     >
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-start justify-between gap-4 py-5 text-left"
+        className="flex w-full items-start justify-between gap-4 py-5 text-left cursor-pointer"
       >
         <span className="text-base font-medium text-night-text">{faq.q}</span>
-        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.05] text-night-muted transition-colors group-hover:border-night-accent/30">
+        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.05] text-night-muted transition-colors">
           {open ? <Minus className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
         </span>
       </button>
@@ -88,7 +84,7 @@ export function FAQ() {
             Questions we actually get asked
           </h2>
           <p className="text-lg text-night-muted">
-            Especially the ones about Google compliance.
+            Especially the ones about how Google reviews work.
           </p>
         </motion.div>
 

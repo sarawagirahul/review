@@ -75,7 +75,7 @@ export function Hero() {
             </h1>
 
             <p className="mb-10 max-w-lg text-lg leading-relaxed text-night-muted md:text-xl">
-              Connect your Google Business Profile via secure OAuth 2.0. Collect authentic customer reviews, manage feedback privately, and respond to all reviews — from one professional platform.
+              Place a QR code at your counter, collect 5-star reviews with AI-generated drafts, and catch negative feedback privately before it ever reaches Google.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -269,15 +269,15 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* Floating: OAuth */}
+            {/* Floating: Review copied */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 3.4, duration: 0.5 }}
               className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-2xl border border-white/[0.1] bg-night-card px-4 py-2.5 shadow-xl"
             >
-              <Lock className="h-3.5 w-3.5 text-night-accent" />
-              <span className="text-xs font-medium text-night-text">Connected via OAuth 2.0</span>
+              <Check className="h-3.5 w-3.5 text-night-accent" />
+              <span className="text-xs font-medium text-night-text">Review copied — paste on Google</span>
             </motion.div>
           </motion.div>
         </div>

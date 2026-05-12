@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { QrCode, Sparkles, Star, Phone, Zap } from "lucide-react";
 
 function QRVisual() {
   return (
@@ -70,9 +71,10 @@ function QRVisual() {
         whileInView={{ opacity: 1, x: 0, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.4, duration: 0.4 }}
-        className="absolute right-4 top-6 rounded-xl border border-white/[0.1] bg-night-card px-2.5 py-1.5 text-[11px] text-night-muted shadow-xl"
+        className="absolute right-4 top-6 flex items-center gap-1.5 rounded-xl border border-white/[0.1] bg-night-card px-2.5 py-1.5 text-[11px] text-night-muted shadow-xl"
       >
-        📱 No app needed
+        <Phone className="h-3 w-3 text-night-accent" />
+        No app needed
       </motion.div>
     </div>
   );
@@ -155,9 +157,10 @@ function PhoneVisual() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 1, duration: 0.4 }}
-        className="absolute left-4 bottom-8 rounded-xl border border-white/[0.1] bg-night-card px-2.5 py-1.5 text-[11px] font-medium text-night-accent shadow-xl"
+        className="absolute left-4 bottom-8 flex items-center gap-1.5 rounded-xl border border-white/[0.1] bg-night-card px-2.5 py-1.5 text-[11px] font-medium text-night-accent shadow-xl"
       >
-        ⚡ 30 seconds
+        <Zap className="h-3 w-3" />
+        30 seconds
       </motion.div>
     </div>
   );
@@ -206,7 +209,7 @@ function GrowthVisual() {
           <div className="flex h-6 w-6 items-center justify-center rounded-full bg-night-accent/[0.15]">
             <svg viewBox="0 0 16 16" className="h-3 w-3 fill-night-accent"><path d="M2 11l4-5 3 3 3-4 4 6H2z"/></svg>
           </div>
-          <p className="text-[10px] text-night-muted">Best week yet — 18 new reviews</p>
+          <p className="text-[10px] text-night-muted">Conversion rate up this week</p>
         </div>
       </motion.div>
     </div>
@@ -216,23 +219,23 @@ function GrowthVisual() {
 const steps = [
   {
     number: "01",
-    emoji: "🪧",
-    title: "Place your QR code",
-    description: "We generate a custom QR stand for your business. Print it, put it on your counter. Setup done in under 5 minutes.",
+    Icon: QrCode,
+    title: "Place Your QR Code",
+    description: "Print and place your branded QR code at your counter, on tables, or on receipts. Each QR is tracked separately so you know exactly which placement drives the most reviews.",
     visual: <QRVisual />,
   },
   {
     number: "02",
-    emoji: "📱",
-    title: "Customer reviews in 30 seconds",
-    description: "They scan with any phone camera. Three AI-written review options appear. They pick one and tap 'Post to Google'. No app, no signup, no friction.",
+    Icon: Sparkles,
+    title: "Customer Rates & AI Writes",
+    description: "When a customer scans and rates 3–5 stars, our AI instantly generates 3 genuine review options in English, Hindi, or Hinglish. They pick one, edit if they want, and copy it in seconds.",
     visual: <PhoneVisual />,
   },
   {
     number: "03",
-    emoji: "📈",
-    title: "Your rating grows on autopilot",
-    description: "Track every new review, reply with one-click AI responses, and watch your Google ranking climb — all from one dashboard.",
+    Icon: Star,
+    title: "Reviews Go Live on Google",
+    description: "One tap copies their review and opens Google — they paste and publish from their own account. Low ratings go directly to you privately, never reaching Google.",
     visual: <GrowthVisual />,
   },
 ];
@@ -279,7 +282,7 @@ export function HowItWorks() {
                   {step.number}
                 </div>
                 <div className="h-px flex-1 border-t border-dashed border-white/[0.08]" />
-                <span className="text-xl">{step.emoji}</span>
+                <step.Icon className="h-5 w-5 text-night-accent" />
               </div>
 
               {/* Visual */}
@@ -302,7 +305,7 @@ export function HowItWorks() {
           transition={{ delay: 0.4 }}
           className="mt-10 text-center text-sm text-night-subtle"
         >
-          Backed by the official Google Business Profile API · OAuth 2.0 secure · No review gating
+          Powered by Google Places API · No app required · No review gating
         </motion.p>
       </div>
     </section>

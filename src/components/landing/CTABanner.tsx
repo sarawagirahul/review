@@ -21,15 +21,15 @@ export function CTABanner() {
           <div className="relative z-10">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.05] px-4 py-2 text-sm text-night-muted">
               <Lock className="h-4 w-4 text-night-accent" />
-              OAuth 2.0 Secure &bull; Official Google Business Profile API
+              Powered by Google Places API &bull; No review gating
             </div>
 
             <h2 className="mb-6 font-display text-4xl font-bold text-night-text md:text-5xl">
-              Ready to manage your reputation professionally?
+              Ready to grow your Google rating?
             </h2>
 
             <p className="mx-auto mb-8 max-w-2xl text-lg text-night-muted">
-              Join 1,200+ Indian businesses using JustHustle to manage their Google Business Profile, collect authentic customer reviews, and respond professionally — all from one secure platform.
+              Place a QR at your counter, collect AI-assisted reviews in seconds, and catch negative feedback privately — before it reaches Google.
             </p>
 
             <div className="mb-10 flex flex-wrap justify-center gap-3">
