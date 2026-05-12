@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   // Check if user exists
   const { data: existingUser } = await supabase
     .from('users')
-    .select('id, role')
+    .select('id, role, phone')
     .eq('id', user.id)
     .single()
 
@@ -41,8 +41,11 @@ export async function POST(request: Request) {
     })
   }
 
-  return NextResponse.json({ 
-    user: existingUser || { id: user.id, role: 'owner' }, 
-    isNewUser 
+  const isProfileComplete = !isNewUser && !!(existingUser?.phone && existingUser.phone !== '')
+
+  return NextResponse.json({
+    user: existingUser || { id: user.id, role: 'owner' },
+    isNewUser,
+    isProfileComplete
   })
 }

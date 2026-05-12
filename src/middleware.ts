@@ -55,16 +55,25 @@ export async function middleware(request: NextRequest) {
     if (!user) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
-    
-    // Check role from users table
+
+    // Fetch role + phone in one query for profile completion gate
     const { data: userData } = await supabase
       .from('users')
-      .select('role')
+      .select('role, phone')
       .eq('id', user.id)
       .single()
 
     if (userData?.role === 'customer') {
       return NextResponse.redirect(new URL('/', request.url))
+    }
+
+    // Profile completion gate: owners without phone must finish setup first
+    if (
+      userData?.role === 'owner' &&
+      !userData.phone &&
+      pathname !== '/dashboard/profile-setup'
+    ) {
+      return NextResponse.redirect(new URL('/dashboard/profile-setup', request.url))
     }
   }
 
