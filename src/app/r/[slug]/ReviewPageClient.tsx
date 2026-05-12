@@ -4,11 +4,14 @@ import { AIReviewCards } from "@/components/review/AIReviewCards";
 import { PrivateFeedbackForm } from "@/components/review/PrivateFeedbackForm";
 import { StarRating } from "@/components/review/StarRating";
 import { ThankYouScreen } from "@/components/review/ThankYouScreen";
+import { createBrowserClient } from "@supabase/ssr";
 import confetti from "canvas-confetti";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ReviewPageStep = "rating" | "ai-review" | "private-feedback" | "thank-you";
+
+type Language = "english" | "hindi" | "hinglish";
 
 interface ReviewPageClientProps {
   business: {
@@ -16,6 +19,9 @@ interface ReviewPageClientProps {
     name: string;
     logo_url?: string;
     qr_slug: string;
+    google_place_id?: string;
+    review_link?: string;
+    city?: string;
     review_page_tagline?: string;
     review_page_thank_you_message?: string;
     social_instagram?: string;
@@ -26,11 +32,23 @@ interface ReviewPageClientProps {
 export function ReviewPageClient({ business }: ReviewPageClientProps) {
   const [step, setStep] = useState<ReviewPageStep>("rating");
   const [rating, setRating] = useState(0);
+  const [language, setLanguage] = useState<Language>("english");
   const [aiReviews, setAiReviews] = useState<string[]>([]);
   const [isGeneratingReview, setIsGeneratingReview] = useState(false);
   const [selectedReview, setSelectedReview] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const REVIEW_SHIELD_THRESHOLD = 3;
+
+  useEffect(() => {
+    fetch('/api/events/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        businessId: business.id,
+        eventType: 'scan'
+      })
+    }).catch(() => {})
+  }, [business.id])
 
   // Handle star rating selection
   const handleRating = (value: number) => {
@@ -56,8 +74,9 @@ export function ReviewPageClient({ business }: ReviewPageClientProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           businessName: business.name,
+          city: business.city,
           rating: ratingValue,
-          language: "english", // Default to English, can be changed to hindi or hinglish
+          language,
         }),
       });
 
@@ -81,20 +100,8 @@ export function ReviewPageClient({ business }: ReviewPageClientProps) {
     setSelectedReview(review);
 
     try {
-      // Track the event
-      await fetch("/api/events/track", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          businessId: business.id,
-          event: "review_posted",
-          rating,
-          reviewIndex: index,
-        }),
-      });
-
-      // Generate Google review deep link
-      const googlePlaceUrl = `https://search.google.com/local/writereview?placeid=${business.id}`;
+      const googlePlaceUrl = business.review_link ||
+        `https://search.google.com/local/writereview?placeid=${business.google_place_id}`;
 
       // Copy review to clipboard
       await navigator.clipboard.writeText(review);
@@ -102,6 +109,30 @@ export function ReviewPageClient({ business }: ReviewPageClientProps) {
 
       // Open Google review in new tab
       window.open(googlePlaceUrl, "_blank");
+
+      // Track the event
+      await fetch("/api/events/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessId: business.id,
+          eventType: "review_clicked",
+          rating,
+          reviewIndex: index,
+        }),
+      });
+
+      // Insert into reviews table
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+      await supabase.from('reviews').insert({
+        business_id: business.id,
+        rating: rating,
+        final_text: review,
+        submitted_to_google: true,
+      });
 
       // Trigger confetti
       confetti({

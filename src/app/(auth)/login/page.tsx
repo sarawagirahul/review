@@ -21,7 +21,7 @@ export default function LoginPage() {
         queryParams: {
           access_type: "offline",
           prompt: "consent",
-          scope: "profile email https://www.googleapis.com/auth/business.manage",
+          scope: "profile email",
         },
       },
     });

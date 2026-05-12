@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       .from("private_feedback")
       .insert({
         business_id: businessId,
-        feedback_text: feedback,
+        message: feedback,
         rating: rating || null,
         created_at: new Date(),
       });

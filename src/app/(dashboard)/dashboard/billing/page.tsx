@@ -1,225 +1,293 @@
-import { Button } from "@/components/ui/Button";
-import { createClient } from "@/lib/supabase/server";
-import { ArrowLeft, Check } from "lucide-react";
+"use client";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { createBrowserClient } from "@supabase/ssr";
+import { motion } from "framer-motion";
+import { ArrowLeft, Check, Clock, Zap } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const PLANS = [
   {
-    name: "Starter",
-    interval: "monthly",
-    price: "₹499",
-    period: "/month",
-    features: [
-      "Up to 100 QR scans/month",
-      "Basic analytics",
-      "Email support",
-      "1 business location",
-    ],
+    interval: "monthly" as const,
+    label: "Monthly",
+    price: "₹599",
+    priceNote: "per month",
+    annualEquivalent: null,
   },
   {
-    name: "Professional",
-    interval: "monthly",
-    price: "₹999",
-    period: "/month",
-    popular: true,
-    features: [
-      "Unlimited QR scans",
-      "Advanced analytics",
-      "Priority support",
-      "Up to 5 business locations",
-      "AI review generation",
-      "Review Shield (Review.ai)",
-    ],
-  },
-  {
-    name: "Enterprise",
-    interval: "monthly",
-    price: "₹2,499",
-    period: "/month",
-    features: [
-      "Everything in Professional",
-      "Custom integrations",
-      "Dedicated account manager",
-      "Up to 50 business locations",
-      "White-label options",
-      "API access",
-    ],
+    interval: "annual" as const,
+    label: "Annual",
+    price: "₹4,999",
+    priceNote: "per year",
+    annualEquivalent: "~₹417/month — save 30%",
   },
 ];
 
-export default async function BillingPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+const FEATURES = [
+  "Unlimited QR codes per business",
+  "AI-generated review drafts (EN / HI / Hinglish)",
+  "Review Shield — intercepts negative reviews",
+  "Up to 3 business locations",
+  "Analytics dashboard",
+  "Email notifications",
+];
 
-  if (!user) {
-    redirect("/login");
-  }
+interface OwnerDetails {
+  subscription_status: string;
+  subscription_interval: string | null;
+  trial_ends_at: string | null;
+  razorpay_subscription_id: string | null;
+}
 
-  // Fetch subscription status
-  const { data: ownerDetails } = await supabase
-    .from("owner_details")
-    .select(
-      "subscription_status, subscription_interval, trial_ends_at, razorpay_subscription_id",
-    )
-    .eq("user_id", user.id)
-    .single();
+export default function BillingPage() {
+  const [ownerDetails, setOwnerDetails] = useState<OwnerDetails | null>(null);
+  const [isSubscribing, setIsSubscribing] = useState<string | null>(null);
+
+  useEffect(() => {
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    );
+
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+      supabase
+        .from("owner_details")
+        .select(
+          "subscription_status, subscription_interval, trial_ends_at, razorpay_subscription_id",
+        )
+        .eq("user_id", user.id)
+        .single()
+        .then(({ data }) => {
+          if (data) setOwnerDetails(data);
+        });
+    });
+  }, []);
 
   const isOnTrial = ownerDetails?.subscription_status === "trial";
   const isActive = ownerDetails?.subscription_status === "active";
-  const daysUntilExpiry =
+
+  const daysRemaining =
     isOnTrial && ownerDetails?.trial_ends_at
-      ? Math.ceil(
-          (new Date(ownerDetails.trial_ends_at).getTime() -
-            new Date().getTime()) /
-            (1000 * 60 * 60 * 24),
+      ? Math.max(
+          0,
+          Math.ceil(
+            (new Date(ownerDetails.trial_ends_at).getTime() - Date.now()) /
+              (1000 * 60 * 60 * 24),
+          ),
         )
       : null;
 
+  const handleSubscribe = async (interval: "monthly" | "annual") => {
+    setIsSubscribing(interval);
+    try {
+      const res = await fetch("/api/razorpay/create-subscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ interval }),
+      });
+      const data = await res.json();
+      if (data.shortUrl) {
+        window.open(data.shortUrl, "_blank");
+      }
+    } catch {
+      alert("Failed to start subscription. Please try again.");
+    } finally {
+      setIsSubscribing(null);
+    }
+  };
+
   return (
-    <div className="space-y-12">
+    <div className="space-y-10">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard">
-          <Button variant="ghost" size="sm" className="gap-2">
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </Button>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="flex items-center gap-4"
+      >
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
         </Link>
         <div>
-          <h1 className="font-display text-3xl font-medium text-ink">
-            Billing & Subscription
+          <h1 className="font-display text-2xl font-normal text-ink">
+            Billing &amp; Subscription
           </h1>
-          <p className="text-muted mt-1">
+          <p className="text-sm text-muted mt-0.5">
             Manage your JustHustle subscription
           </p>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Trial Status */}
-      {isOnTrial && daysUntilExpiry !== null && (
-        <div
-          className={`rounded-2xl border-2 p-6 ${
-            daysUntilExpiry <= 2
-              ? "border-signature-coral bg-signature-coral/5"
-              : "border-blue-200 bg-blue-50"
+      {/* Trial status banner */}
+      {isOnTrial && daysRemaining !== null && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className={`rounded-2xl border-2 p-6 flex items-start gap-4 ${
+            daysRemaining <= 2
+              ? "border-signature-coral/40 bg-signature-coral/5"
+              : "border-signature-forest/20 bg-signature-forest/5"
           }`}
         >
-          <p
-            className={`font-semibold ${
-              daysUntilExpiry <= 2 ? "text-signature-coral" : "text-blue-900"
+          <Clock
+            className={`h-5 w-5 mt-0.5 shrink-0 ${
+              daysRemaining <= 2
+                ? "text-signature-coral"
+                : "text-signature-forest"
             }`}
-          >
-            {daysUntilExpiry <= 0
-              ? "Your trial has expired"
-              : daysUntilExpiry === 1
-                ? "Your trial expires today!"
-                : `Your trial expires in ${daysUntilExpiry} days`}
-          </p>
-          <p className="text-sm mt-2 opacity-90">
-            Upgrade now to continue using JustHustle without interruption
-          </p>
-        </div>
+          />
+          <div>
+            <p
+              className={`font-semibold text-sm ${
+                daysRemaining <= 2
+                  ? "text-signature-coral"
+                  : "text-signature-forest"
+              }`}
+            >
+              {daysRemaining === 0
+                ? "Your trial expires today"
+                : daysRemaining === 1
+                  ? "1 day left in your trial"
+                  : `${daysRemaining} days left in your trial`}
+            </p>
+            <p className="text-xs text-muted mt-1">
+              7-day free trial — full features, no card required. Subscribe
+              below to keep access after trial ends.
+            </p>
+          </div>
+        </motion.div>
       )}
 
       {isActive && (
-        <div className="rounded-2xl border-2 border-green-200 bg-green-50 p-6">
-          <p className="font-semibold text-green-900">
-            ✓ Your subscription is active
-          </p>
-          <p className="text-sm mt-2 text-green-800">
-            You have access to all{" "}
-            {ownerDetails?.subscription_interval === "annual"
-              ? "annual"
-              : "monthly"}{" "}
-            plan features
-          </p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="rounded-2xl border-2 border-signature-forest/20 bg-signature-forest/5 p-6 flex items-center gap-3"
+        >
+          <Check className="h-5 w-5 text-signature-forest shrink-0" />
+          <div>
+            <p className="font-semibold text-sm text-signature-forest">
+              Subscription active
+            </p>
+            <p className="text-xs text-muted mt-0.5">
+              {ownerDetails?.subscription_interval === "annual"
+                ? "Annual plan"
+                : "Monthly plan"}{" "}
+              — all features included
+            </p>
+          </div>
+        </motion.div>
       )}
 
-      {/* Pricing Plans */}
+      {/* Plan cards */}
       <div>
-        <h2 className="font-display text-2xl font-semibold text-ink mb-8">
-          Choose Your Plan
-        </h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="font-display text-lg font-normal text-ink mb-6"
+        >
+          Choose a plan
+        </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {PLANS.map((plan) => (
-            <div
-              key={plan.name}
-              className={`rounded-2xl border-2 p-8 transition-all ${
-                plan.popular
-                  ? "border-primary bg-primary/5 shadow-lg scale-105"
-                  : "border-hairline bg-white hover:border-primary/50"
-              }`}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl">
+          {PLANS.map((plan, i) => (
+            <motion.div
+              key={plan.interval}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.2 + i * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
-              {plan.popular && (
-                <div className="inline-block px-3 py-1 rounded-full bg-primary text-white text-xs font-semibold mb-4">
-                  Most Popular
-                </div>
-              )}
-
-              <h3 className="font-display text-2xl font-semibold text-ink mb-2">
-                {plan.name}
-              </h3>
-
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-ink">
-                  {plan.price}
-                </span>
-                <span className="text-muted ml-2">{plan.period}</span>
-              </div>
-
-              <Button
-                variant={plan.popular ? "primary" : "secondary"}
-                size="lg"
-                className="w-full mb-8"
+              <Card
+                className={`relative rounded-2xl border transition-all h-full ${
+                  plan.interval === "annual"
+                    ? "border-signature-forest/30 shadow-md"
+                    : "border-hairline"
+                }`}
               >
-                Subscribe Now
-              </Button>
-
-              <div className="space-y-3">
-                {plan.features.map((feature) => (
-                  <div key={feature} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm text-ink">{feature}</p>
+                {plan.interval === "annual" && (
+                  <div className="absolute -top-3 left-4">
+                    <Badge className="bg-signature-forest text-white text-xs px-2.5 py-0.5 rounded-full">
+                      Best value
+                    </Badge>
                   </div>
-                ))}
-              </div>
-            </div>
+                )}
+                <CardHeader className="pb-2 pt-6 px-6">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-signature-forest">
+                      {plan.label}
+                    </p>
+                    <Zap className="h-4 w-4 text-muted" />
+                  </div>
+                  <div className="mt-3">
+                    <span className="text-3xl font-bold text-ink">
+                      {plan.price}
+                    </span>
+                    <span className="text-sm text-muted ml-2">
+                      {plan.priceNote}
+                    </span>
+                  </div>
+                  {plan.annualEquivalent && (
+                    <p className="text-xs text-signature-forest mt-1">
+                      {plan.annualEquivalent}
+                    </p>
+                  )}
+                </CardHeader>
+                <CardContent className="px-6 pb-6">
+                  <button
+                    onClick={() => handleSubscribe(plan.interval)}
+                    disabled={isSubscribing !== null || isActive}
+                    className={`w-full mt-4 mb-5 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
+                      plan.interval === "annual"
+                        ? "bg-signature-forest text-white hover:bg-signature-forest/90 disabled:opacity-50"
+                        : "border border-hairline bg-canvas text-ink hover:border-signature-forest/40 disabled:opacity-50"
+                    }`}
+                  >
+                    {isSubscribing === plan.interval
+                      ? "Opening checkout…"
+                      : isActive
+                        ? "Current plan"
+                        : "Subscribe"}
+                  </button>
+
+                  <div className="space-y-2.5">
+                    {FEATURES.map((f) => (
+                      <div key={f} className="flex items-start gap-2.5">
+                        <Check className="h-4 w-4 text-signature-forest shrink-0 mt-0.5" />
+                        <p className="text-xs text-muted">{f}</p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Annual Plans */}
-      <div className="rounded-2xl border-2 border-dashed border-primary/30 bg-primary/5 p-8">
-        <h3 className="font-display text-xl font-semibold text-ink mb-4">
-          Save 20% with Annual Plans
-        </h3>
-        <p className="text-muted mb-6">
-          Get 2 months free when you subscribe to an annual plan. Perfect for
-          growing businesses!
-        </p>
-        <Button variant="primary">View Annual Pricing</Button>
-      </div>
-
-      {/* Subscription Management */}
-      {isActive && (
-        <div className="rounded-2xl border border-hairline bg-white p-8">
-          <h3 className="font-display text-xl font-semibold text-ink mb-6">
-            Current Subscription
-          </h3>
-          <div className="space-y-4">
-            <p className="text-sm text-muted">
-              You can manage, upgrade, or cancel your subscription at any time.
-            </p>
-            <Button variant="secondary">Manage Subscription</Button>
-            <Button variant="ghost">Cancel Subscription</Button>
-          </div>
-        </div>
-      )}
+      {/* Trial note */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="text-xs text-muted max-w-2xl"
+      >
+        Trial: 7 days, full features, no card required. Base plan includes up to
+        3 business locations. Cancel anytime.
+      </motion.p>
     </div>
   );
 }
